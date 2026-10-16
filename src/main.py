@@ -86,9 +86,13 @@ class ReceiptHandler(FileSystemEventHandler):
         receipt_date = extract_date_from_receipt(file_path)
         
         if receipt_date:
-            year_str = receipt_date.strftime("%Y")
+            # 皇紀への変換処理
+            gregorian_year = receipt_date.year
+            koki_year = gregorian_year + 660
+            
+            year_str = str(koki_year)
             quarter_str = get_quarter(receipt_date.month)
-            date_str = receipt_date.strftime("%Y%m%d")
+            date_str = receipt_date.strftime("%Y%m%d") # ファイル名は西暦で保存
             
             target_dir = os.path.join(DEST_BASE_DIR, year_str, quarter_str)
             os.makedirs(target_dir, exist_ok=True)
