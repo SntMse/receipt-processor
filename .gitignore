@@ -1,0 +1,8 @@
+# 秘密鍵・環境変数
+credentials.json
+.env
+
+# Python関連
+__pycache__/
+*.py[cod]
+*$py.class

@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  receipt-processor:
+    build: .
+    container_name: receipt-processor
+    restart: unless-stopped
+    environment:
+      - TZ=Asia/Tokyo
+      # 監視対象と保存先のパス（コンテナ内のパスを指定）
+      - WATCH_DIR=/data/inbox
+      - DEST_BASE_DIR=/data/db
+      - MANUAL_DIR=/data/db/Manual_Check
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/credentials.json
+    volumes:
+      # NASの実パス : コンテナ内のパス
+      # ※左側のパス（/volume1/...）はご自身のNASの実際の共有フォルダパスに合わせて書き換えてください
+      - /volume1/Scans/Inbox:/data/inbox
+      - /volume1/Home/Receipts:/data/db
+      - ./src:/app/src
+      - ./credentials.json:/app/credentials.json:ro
