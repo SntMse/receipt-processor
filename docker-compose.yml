@@ -7,15 +7,14 @@ services:
     restart: unless-stopped
     environment:
       - TZ=Asia/Tokyo
-      # 監視対象と保存先のパス（コンテナ内のパスを指定）
+      # コンテナ内のパス
       - WATCH_DIR=/data/inbox
       - DEST_BASE_DIR=/data/db
       - MANUAL_DIR=/data/db/Manual_Check
       - GOOGLE_APPLICATION_CREDENTIALS=/app/credentials.json
     volumes:
       # NASの実パス : コンテナ内のパス
-      # ※左側のパス（/volume1/...）はご自身のNASの実際の共有フォルダパスに合わせて書き換えてください
-      - /volume1/Scans/Inbox:/data/inbox
-      - /volume1/Home/Receipts:/data/db
-      - ./src:/app/src
-      - ./credentials.json:/app/credentials.json:ro
+      - "/volume1/homes/sntmse/SLA SntMse生涯文庫™︎/SLAレシートアーカイブ/処理前:/data/inbox"
+      - "/volume1/homes/sntmse/SLA SntMse生涯文庫™︎/SLAレシートアーカイブ/KJ 京都期間:/data/db"
+      - "./src:/app/src"
+      - "./credentials.json:/app/credentials.json:ro"
